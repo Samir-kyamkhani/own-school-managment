@@ -1,0 +1,20 @@
+version: '1.0'
+
+services:
+  image: postgres:15
+  conntainer_name: postgres
+  evironment:
+  POSTGRES_USER: myuser
+  POSTGRES_PASSWORD: mypassword
+  POSTGRES_DB: mydb
+  ports: -'5432:5432'
+  volumes:
+    - ./postgres_data:/var/lib/postgresql/data
+
+  app:
+    conntainer_name: nextjs_app
+    ports: -'3000:3000'
+    evironment:
+    -DATABASE_URL: postgresql://myuser:mypassword@localhost:5432/mydb
+    depends_on:
+      - serviceName: postgres
